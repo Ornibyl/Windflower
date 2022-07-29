@@ -1,0 +1,97 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Premake",
+            "type": "shell",
+            "command": "premake5 gmake2",
+            "group": "build"
+        },
+        {
+            "label": "Build Debug",
+            "type": "shell",
+            "command": "make config=debug",
+            "dependsOn": ["Run Premake"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Build Release",
+            "type": "shell",
+            "command": "make config=release",
+            "dependsOn": ["Run Premake"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "Run Debug",
+            "type": "shell",
+            "osx": {
+                "command": "bin/Debug-macosx/wftool",
+            },
+            "args": [
+                "TestScripts/Main.wf"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test"
+        },
+        {
+            "label": "Run Release",
+            "type": "shell",
+            "osx": {
+                "command": "bin/Debug-macosx/wftool"
+            },
+            "args": [
+                "TestScripts/Main.wf"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test"
+        },
+        {
+            "label": "Build & Run Debug",
+            "type": "shell",
+            "osx": {
+                "command": "bin/Debug-macosx/wftool",
+            },
+            "args": [
+                "TestScripts/Main.wf"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": [ "Build Debug" ],
+            "group": "test"
+        },
+        {
+            "label": "Build & Run Release",
+            "type": "shell",
+            "osx": {
+                "command": "bin/Release-macosx/wftool",
+            },
+            "args": [
+                "TestScripts/Main.wf"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": [ "Build Release" ],
+            "group": "test"
+        },
+    ]
+}
