@@ -11,7 +11,7 @@ void wf_object_array_init(wf_ObjectArray* arr)
 
 void wf_object_array_destroy(wf_Environment* env, wf_ObjectArray* arr)
 {
-    wf_free(env, arr->items, sizeof(wf_Value) * arr->capacity);
+    wf_free(env, arr->items, sizeof(wf_Object*) * arr->capacity);
 }
 
 void wf_object_array_push(wf_Environment* env, wf_ObjectArray* arr, wf_Object* value)
@@ -19,15 +19,15 @@ void wf_object_array_push(wf_Environment* env, wf_ObjectArray* arr, wf_Object* v
     arr->size++;
     if(arr->size < WF_ARRAY_INITIAL_SIZE)
     {
-        arr->items = wf_malloc(env, sizeof(wf_Value) * WF_ARRAY_INITIAL_SIZE);
+        arr->items = wf_malloc(env, sizeof(wf_Object*) * WF_ARRAY_INITIAL_SIZE);
         arr->capacity = WF_ARRAY_INITIAL_SIZE;
     }
     else if(arr->size > arr->capacity)
     {
         size_t old_capacity = arr->capacity;
         arr->capacity = arr->capacity * WF_ARRAY_GROW_FACTOR;
-        arr->items = wf_realloc(env, arr->items, sizeof(wf_Value) * old_capacity, 
-                                sizeof(wf_Value) * arr->capacity);
+        arr->items = wf_realloc(env, arr->items, sizeof(wf_Object*) * old_capacity, 
+                                sizeof(wf_Object*) * arr->capacity);
     }
     arr->items[arr->size - 1] = value;
 }

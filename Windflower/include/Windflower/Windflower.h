@@ -18,7 +18,7 @@ typedef struct wf_Environment wf_Environment;
 
 typedef struct wf_CompileInfo
 {
-    const char* main_file_name;
+    const char* main_file_path;
     const char* main_file_text;
 } wf_CompileInfo;
 

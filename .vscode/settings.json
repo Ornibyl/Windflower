@@ -24,6 +24,7 @@
         "memory": "c",
         "environment.h": "c",
         "string.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "tokenizer.h": "c"
     }
 }
