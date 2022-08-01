@@ -44,3 +44,11 @@ void* wf_default_allocator(void* ptr, size_t old_size, size_t new_size, void* us
     }
     return realloc(ptr, new_size);
 }
+
+void wf_compile_info_defaults(wf_CompileInfo* info)
+{
+    info->main_file_text = NULL;
+    info->main_file_path = NULL;
+    info->max_error_count = 20;
+    info->use_error_colors = true;
+}

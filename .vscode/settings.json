@@ -25,6 +25,7 @@
         "environment.h": "c",
         "string.h": "c",
         "stdio.h": "c",
-        "tokenizer.h": "c"
+        "tokenizer.h": "c",
+        "stringutils.h": "c"
     }
 }

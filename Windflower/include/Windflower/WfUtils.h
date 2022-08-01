@@ -13,3 +13,5 @@
 wf_Status wf_load_file(wf_Environment* env, const char* file_path);
 
 void* wf_default_allocator(void* ptr, size_t old_size, size_t new_size, void* user_data);
+
+void wf_compile_info_defaults(wf_CompileInfo* info);

@@ -20,13 +20,20 @@ void wf_destroy_environment(wf_Environment* env)
 
 wf_Status wf_compile(wf_Environment* env, const wf_CompileInfo* compile_info)
 {
-    wf_compiler_init(&env->compiler, compile_info);
+    wf_compiler_init(env, &env->compiler, compile_info);
 
     wf_BytecodeObj* code = wf_alloc_bytecode(&env->vm);
     wf_value_array_push(env, &env->vm.stack, OBJ_VALUE(code));
 
-    wf_compiler_compile(&env->compiler, code);
+    wf_StringObj* errors = wf_compiler_compile(&env->compiler, code);    
     wf_compiler_destroy(&env->compiler);
+
+    if(errors != NULL)
+    {
+        wf_pop(env);
+        wf_value_array_push(env, &env->vm.stack, OBJ_VALUE(errors));
+        return WF_COMPILATION_ERROR;
+    }
     
     return WF_OK;
 }

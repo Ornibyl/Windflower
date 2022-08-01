@@ -4,6 +4,9 @@
 #include "VM/VM.h"
 #include "Compiler/Compiler.h"
 
+#define WF_ERROR_COLOR "\x1b[31m"
+#define WF_DEFAULT_COLOR "\x1b[0m"
+
 struct wf_Environment
 {
     wf_AllocatorFunc allocator_func; 

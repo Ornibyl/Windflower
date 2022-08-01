@@ -1,0 +1,11 @@
+expression = additiveExpression;
+
+additiveExpression = multiplicativeExpression { ( STAR | SLASH ) multiplicativeExpression };
+
+multiplicativeExpression = primaryExpression { ( PLUS | MINUS ) primaryExpression };
+
+signExpression = MINUS signExpression
+                | primaryExpression;
+
+primaryExpression = INT | FLOAT
+                    | OPEN_PAREN expression CLOSE_PAREN;

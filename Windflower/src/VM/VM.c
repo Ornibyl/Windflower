@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "Utils/Allocation.h"
 
@@ -68,10 +69,66 @@ wf_StringObj* wf_alloc_string_format(wf_VM* vm, const char* format, ...)
     va_end(args1);
 
     wf_StringObj* obj = wf_alloc_string(vm, length);
-    vsnprintf(obj->text, obj->length, format, args2);
+    // Add 1 to obj->length so that the last char doesn't get cut off
+    vsnprintf(obj->text, obj->length + 1, format, args2);
     va_end(args2);
     
     obj->text[obj->length] = '\0';
+    return obj;
+}
+
+wf_StringObj* wf_alloc_string_concat_format(wf_VM* vm, wf_StringObj* base, const char* format, ...)
+{
+    va_list args1;
+    va_start(args1, format);
+    va_list args2;
+    va_copy(args2, args1);
+
+    size_t length = (size_t)vsnprintf(NULL, 0, format, args1);
+    va_end(args1);
+
+    wf_StringObj* obj = wf_alloc_string(vm, base->length + length);
+    memcpy(obj->text, base->text, base->length);
+    vsnprintf(obj->text + base->length + 1, length, format, args2);
+    va_end(args2);
+
+    obj->text[obj->length] = '\0';
+
+    return obj;
+}
+
+wf_StringObj* wf_alloc_string_vformat(wf_VM* vm, const char* format, va_list args)
+{
+    va_list args2;
+    va_copy(args2, args);
+
+    size_t length = (size_t)vsnprintf(NULL, 0, format, args2);
+    va_end(args2);
+
+    wf_StringObj* obj = wf_alloc_string(vm, length);
+    vsnprintf(obj->text, obj->length + 1, format, args);
+    va_end(args);
+
+    obj->text[obj->length] = '\0';
+    return obj;
+}
+
+wf_StringObj* wf_alloc_string_concat_vformat(wf_VM* vm, wf_StringObj* base, const char* format, 
+                                                va_list args)
+{
+    va_list args2;
+    va_copy(args2, args);
+
+    size_t length = (size_t)vsnprintf(NULL, 0, format, args2);
+    va_end(args2);
+
+    wf_StringObj* obj = wf_alloc_string(vm, base->length + length);
+    memcpy(obj->text, base->text, base->length);
+    vsnprintf(obj->text + base->length, length + 1, format, args);
+    va_end(args);
+
+    obj->text[obj->length] = '\0';
+
     return obj;
 }
 

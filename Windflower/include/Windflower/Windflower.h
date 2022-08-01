@@ -20,6 +20,8 @@ typedef struct wf_CompileInfo
 {
     const char* main_file_path;
     const char* main_file_text;
+    uint16_t max_error_count;
+    bool use_error_colors; 
 } wf_CompileInfo;
 
 typedef enum wf_Status

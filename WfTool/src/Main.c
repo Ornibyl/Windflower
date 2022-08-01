@@ -29,6 +29,7 @@ int main(int argc, const char* argv[])
     size_t file_text_position = wf_get_size(env) - 1;
 
     wf_CompileInfo info;
+    wf_compile_info_defaults(&info);
     info.main_file_path = argv[1];
     info.main_file_text = wf_get_string(env, -1);
     switch(wf_compile(env, &info))
